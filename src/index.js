@@ -1,11 +1,15 @@
 import path from 'path';
 import { getInput, setFailed, startGroup, endGroup, debug } from '@actions/core';
-import { GitHub, context } from '@actions/github';
+import { getOctokit, context } from '@actions/github';
 import { exec } from '@actions/exec';
 import SizePlugin from 'size-plugin-core';
 import { fileExists, diffTable, toBool, stripHash } from './utils.js';
 
-
+/**
+ * @param {ReturnType<typeof import("@actions/github").getOctokit>} octokit 
+ * @param {typeof import("@actions/github").context} context 
+ * @param {string} token 
+ */
 async function run(octokit, context, token) {
 	const { owner, repo, number: pull_number } = context.issue;
 
@@ -231,7 +235,7 @@ async function createCheck(octokit, context) {
 (async () => {
 	try {
 		const token = getInput('repo-token', { required: true });
-		const octokit = new GitHub(token);
+		const octokit = getOctokit(token);
 		await run(octokit, context, token);
 	} catch (e) {
 		setFailed(e.message);

@@ -10,7 +10,7 @@
   "devDependencies": {
     "@actions/core": "^1.2.2",
     "@actions/exec": "^1.0.3",
-    "@actions/github": "^2.0.1",
+    "@actions/github": "^4.0.0",
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@types/jest": "^26.0.0",
