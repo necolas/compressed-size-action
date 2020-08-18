@@ -6,20 +6,36 @@ import SizePlugin from 'size-plugin-core';
 import { fileExists, diffTable, toBool, stripHash } from './utils.js';
 
 /**
- * @param {ReturnType<typeof import("@actions/github").getOctokit>} octokit 
- * @param {typeof import("@actions/github").context} context 
+ * @typedef {ReturnType<typeof import("@actions/github").getOctokit>} Octokit
+ * @typedef {typeof import("@actions/github").context} ActionContext
+ * @param {Octokit} octokit 
+ * @param {ActionContext} context 
  * @param {string} token 
  */
 async function run(octokit, context, token) {
 	const { owner, repo, number: pull_number } = context.issue;
 
 	// const pr = (await octokit.pulls.get({ owner, repo, pull_number })).data;
-	const pr = context.payload.pull_request;
 	try {
-		debug('pr' + JSON.stringify(pr, null, 2));
+		debug('pr' + JSON.stringify(context.payload, null, 2));
 	} catch (e) { }
-	if (!pr) {
-		throw Error('Could not retrieve PR information. Only "pull_request" triggered workflows are currently supported.');
+
+	let baseSha, baseRef;
+	if (context.eventName == "push") {
+		baseSha = context.payload.before;
+		baseRef = context.payload.ref;
+
+		console.log(`Pushed new commit on top of ${baseRef} (${baseSha})`)
+	} else if (context.eventName == "pull_request") {
+		const pr = context.payload.pull_request;
+		baseSha = pr.base.sha;
+		baseRef = pr.base.ref;
+
+		console.log(`PR #${pull_number} is targeted at ${baseRef} (${baseRef})`)
+	} else {
+		throw new Error(
+			`Unsupported eventName in github.context: ${context.eventName}. Only "pull_request" and "push" triggered workflows are currently supported.`
+		);
 	}
 
 	const plugin = new SizePlugin({
@@ -28,8 +44,6 @@ async function run(octokit, context, token) {
 		exclude: getInput('exclude') || '{**/*.map,**/node_modules/**}',
 		stripHash: stripHash(getInput('strip-hash'))
 	});
-
-	console.log(`PR #${pull_number} is targetted at ${pr.base.ref} (${pr.base.sha})`);
 
 	const buildScript = getInput('build-script') || 'build';
 	const cwd = process.cwd();
@@ -59,16 +73,14 @@ async function run(octokit, context, token) {
 	const newSizes = await plugin.readFromDisk(cwd);
 
 	startGroup(`[base] Checkout target branch`);
-	let baseRef;
 	try {
-		baseRef = context.payload.base.ref;
 		if (!baseRef) throw Error('missing context.payload.pull_request.base.ref');
-		await exec(`git fetch -n origin ${context.payload.pull_request.base.ref}`);
+		await exec(`git fetch -n origin ${baseRef}`);
 		console.log('successfully fetched base.ref');
 	} catch (e) {
 		console.log('fetching base.ref failed', e.message);
 		try {
-			await exec(`git fetch -n origin ${pr.base.sha}`);
+			await exec(`git fetch -n origin ${baseSha}`);
 			console.log('successfully fetched base.sha');
 		} catch (e) {
 			console.log('fetching base.sha failed', e.message);
@@ -86,7 +98,7 @@ async function run(octokit, context, token) {
 		await exec(`git reset --hard ${baseRef}`);
 	}
 	catch (e) {
-		await exec(`git reset --hard ${pr.base.sha}`);
+		await exec(`git reset --hard ${baseSha}`);
 	}
 	endGroup();
 
@@ -126,7 +138,11 @@ async function run(octokit, context, token) {
 		body: markdownDiff + '\n\n<a href="https://github.com/preactjs/compressed-size-action"><sub>compressed-size-action</sub></a>'
 	};
 
-	if (toBool(getInput('use-check'))) {
+	if (context.eventName !== 'pull_request') {
+		console.log('No PR associated with this action run. Not posting a check or comment.');
+		outputRawMarkdown = false;
+	}
+	else if (toBool(getInput('use-check'))) {
 		if (token) {
 			const finish = await createCheck(octokit, context);
 			await finish({
@@ -182,7 +198,7 @@ async function run(octokit, context, token) {
 				console.log(`Error creating comment: ${e.message}`);
 				console.log(`Submitting a PR review comment instead...`);
 				try {
-					const issue = context.issue || pr;
+					const issue = context.issue;
 					await octokit.pulls.createReview({
 						owner: issue.owner,
 						repo: issue.repo,
@@ -211,8 +227,11 @@ async function run(octokit, context, token) {
 	console.log('All done!');
 }
 
-
-// create a check and return a function that updates (completes) it
+/**
+ * Create a check and return a function that updates (completes) it
+ * @param {Octokit} octokit 
+ * @param {ActionContext} context 
+ */
 async function createCheck(octokit, context) {
 	const check = await octokit.checks.create({
 		...context.repo,
