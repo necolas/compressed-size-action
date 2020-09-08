@@ -126,7 +126,7 @@ export function diffTable(files, { showTotal, collapseUnchanged, omitUnchanged, 
 		totalSize += size;
 		totalDelta += delta;
 
-		const difference = ((delta / (delta + size)) * 100) | 0;
+		const difference = ((delta / (delta + size)) * 100).toFixed(1);
 		const isUnchanged = Math.abs(delta) < minimumChangeThreshold;
 
 		if (isUnchanged && omitUnchanged) continue;

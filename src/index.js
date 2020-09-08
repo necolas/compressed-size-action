@@ -2,7 +2,7 @@ import path from 'path';
 import { getInput, setFailed, startGroup, endGroup, debug } from '@actions/core';
 import { GitHub, context } from '@actions/github';
 import { exec } from '@actions/exec';
-import SizePlugin from 'size-plugin-core';
+import SizePlugin from 'compressed-size-plugin';
 import { fileExists, diffTable, toBool, stripHash } from './utils.js';
 
 
