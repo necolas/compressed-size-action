@@ -28,11 +28,8 @@ async function run(octokit, context, token) {
 	console.log(`PR #${pull_number} is targetted at ${pr.base.ref} (${pr.base.sha})`);
 
 	const buildScript = getInput('build-script') || 'build';
-	const cwd = process.cwd();
-
-	const yarnLock = await fileExists(path.resolve(cwd, 'yarn.lock'));
-	const packageLock = await fileExists(path.resolve(cwd, 'package-lock.json'));
-
+	const yarnLock = await fileExists(path.resolve(process.cwd(), 'yarn.lock'));
+	const packageLock = await fileExists(path.resolve(process.cwd(), 'package-lock.json'));
 	let npm = `npm`;
 	let installScript = `npm install`;
 	if (yarnLock) {
@@ -42,17 +39,25 @@ async function run(octokit, context, token) {
 		installScript = `npm ci`;
 	}
 
-	startGroup(`[current] Install Dependencies`);
+	/**
+	 * Patch
+	 */
+
+	startGroup(`[patch] Install Dependencies`);
 	console.log(`Installing using ${installScript}`)
 	await exec(installScript);
 	endGroup();
 
-	startGroup(`[current] Build using ${npm}`);
+	startGroup(`[patch] Build using ${npm}`);
 	console.log(`Building using ${npm} run ${buildScript}`);
 	await exec(`${npm} run ${buildScript}`);
 	endGroup();
 
-	const newSizes = await plugin.readFromDisk(cwd);
+	const patchSizes = await plugin.readFromDisk(process.cwd());
+
+	/**
+	 * Target
+	 */
 
 	startGroup(`[base] Checkout target branch`);
 	let baseRef;
@@ -60,25 +65,25 @@ async function run(octokit, context, token) {
 		baseRef = context.payload.base.ref;
 		if (!baseRef) throw Error('missing context.payload.pull_request.base.ref');
 		await exec(`git fetch -n origin ${context.payload.pull_request.base.ref}`);
-		console.log('successfully fetched base.ref');
+		console.log('Successfully fetched base.ref');
 	} catch (e) {
-		console.log('fetching base.ref failed', e.message);
+		console.log('Fetching base.ref failed', e.message);
 		try {
 			await exec(`git fetch -n origin ${pr.base.sha}`);
-			console.log('successfully fetched base.sha');
+			console.log('Successfully fetched base.sha');
 		} catch (e) {
-			console.log('fetching base.sha failed', e.message);
+			console.log('Fetching base.sha failed', e.message);
 			try {
 				await exec(`git fetch -n`);
 			} catch (e) {
-				console.log('fetch failed', e.message);
+				console.log('Fetch failed', e.message);
 			}
 		}
 	}
 
-	console.log('checking out and building base commit');
+	console.log('Checking out and building base commit');
 	try {
-		if (!baseRef) throw Error('missing context.payload.base.ref');
+		if (!baseRef) throw Error('Missing context.payload.base.ref');
 		await exec(`git reset --hard ${baseRef}`);
 	}
 	catch (e) {
@@ -87,18 +92,24 @@ async function run(octokit, context, token) {
 	endGroup();
 
 	startGroup(`[base] Install Dependencies`);
+	console.log(`Installing using ${installScript}`)
 	await exec(installScript);
 	endGroup();
 
 	startGroup(`[base] Build using ${npm}`);
+	console.log(`Building using ${npm} run ${buildScript}`);
 	await exec(`${npm} run ${buildScript}`);
 	endGroup();
 
-	const oldSizes = await plugin.readFromDisk(cwd);
+	const targetSizes = await plugin.readFromDisk(process.cwd());
 
-	const diff = await plugin.getDiff(oldSizes, newSizes);
+	/**
+	 * Diff
+	 */
 
-	startGroup(`Size Differences:`);
+	const diff = await plugin.getDiff(targetSizes, patchSizes);
+
+	startGroup(`Size differences:`);
 	const cliText = await plugin.printSizes(diff);
 	console.log(cliText);
 	endGroup();

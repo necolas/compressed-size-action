@@ -46,7 +46,7 @@ export function stripHash(regex) {
 export function getDeltaText(delta, difference) {
 	let deltaText = (delta > 0 ? '+' : '') + prettyBytes(delta);
 	if (delta && Math.abs(delta) > 1) {
-		deltaText += ` (${Math.abs(difference)}%)`;
+		deltaText += ` (${difference}%)`;
 	}
 	return deltaText;
 }
@@ -122,11 +122,11 @@ export function diffTable(files, { showTotal, collapseUnchanged, omitUnchanged, 
 	let totalSize = 0;
 	let totalDelta = 0;
 	for (const file of files) {
-		const { filename, size, delta } = file;
+		const { filename, size, sizeBefore, delta } = file;
 		totalSize += size;
 		totalDelta += delta;
-
-		const difference = ((delta / (delta + size)) * 100).toFixed(1);
+		const divisor = sizeBefore === 0 ? Math.abs(delta) : sizeBefore
+		const difference = ((delta / divisor) * 100).toFixed(1);
 		const isUnchanged = Math.abs(delta) < minimumChangeThreshold;
 
 		if (isUnchanged && omitUnchanged) continue;
@@ -134,7 +134,7 @@ export function diffTable(files, { showTotal, collapseUnchanged, omitUnchanged, 
 		const columns = [
 			`\`${filename}\``, 
 			prettyBytes(size), 
-			getDeltaText(delta, difference), 
+			getDeltaText(delta, difference),
 			iconForDifference(difference)
 		];
 		if (isUnchanged && collapseUnchanged) {

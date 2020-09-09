@@ -12,7 +12,7 @@ test('toBool', () => {
 
 test('getDeltaText', () => {
 	expect(getDeltaText(5000, 25.5)).toBe('+5 kB (25.5%)');
-	expect(getDeltaText(-5000, -25.5)).toBe('-5 kB (25.5%)');
+	expect(getDeltaText(-5000, -25.5)).toBe('-5 kB (-25.5%)');
 	expect(getDeltaText(0, 0)).toBe('0 B');
 });
 
@@ -22,26 +22,48 @@ test('iconForDifference', () => {
 
 test('diffTable', () => {
 	const files = [
+		// increase
 		{
-			filename: 'one.js',
+			filename: 'increase.js',
 			size: 5000,
+			sizeBefore: 2500,
 			delta: 2500
 		},
+		// decrease
 		{
-			filename: 'two.js',
-			size: -5000,
+			filename: 'decrease.js',
+			size: 2500,
+			sizeBefore: 5000,
 			delta: -2500
 		},
+		// unchanged
 		{
-			filename: 'three.js',
+			filename: 'unchanged.js',
 			size: 300,
+			sizeBefore: 300,
 			delta: 0
 		},
+		// added
 		{
-			filename: 'four.js',
+			filename: 'added.js',
+			size: 5000,
+			sizeBefore: 0,
+			delta: 5000
+		},
+		// removed
+		{
+			filename: 'removed.js',
+			size: 0,
+			sizeBefore: 5000,
+			delta: -5000
+		},
+		// threshold
+		{
+			filename: 'threshold.js',
 			size: 4500,
+			sizeBefore: 4491,
 			delta: 9
-		}
+		},
 	];
 	const defaultOptions = {
 		showTotal: true,
