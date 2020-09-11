@@ -11,9 +11,9 @@ test('toBool', () => {
 });
 
 test('getDeltaText', () => {
-	expect(getDeltaText(5000, 25.5)).toBe('+5 kB (25.5%)');
-	expect(getDeltaText(-5000, -25.5)).toBe('-5 kB (-25.5%)');
-	expect(getDeltaText(0, 0)).toBe('0 B');
+	expect(getDeltaText(5000, 25.5)).toMatchSnapshot();
+	expect(getDeltaText(-5000, -25.5)).toMatchSnapshot();
+	expect(getDeltaText(0, 0)).toMatchSnapshot();
 });
 
 test('iconForDifference', () => {
@@ -25,44 +25,62 @@ test('diffTable', () => {
 		// increase
 		{
 			filename: 'increase.js',
-			size: 5000,
-			sizeBefore: 2500,
-			delta: 2500
+			compressedSize: 5000,
+			compressedSizeBefore: 2500,
+			compressedSizeDelta: 2500,
+			size: 10000,
+			sizeBefore: 7000,
+			sizeDelta: 3000,
 		},
 		// decrease
 		{
 			filename: 'decrease.js',
-			size: 2500,
-			sizeBefore: 5000,
-			delta: -2500
+			compressedSize: 2500,
+			compressedSizeBefore: 5000,
+			compressedSizeDelta: -2500,
+			size: 7500,
+			sizeBefore: 12000,
+			sizeDelta: -4500
 		},
 		// unchanged
 		{
 			filename: 'unchanged.js',
-			size: 300,
-			sizeBefore: 300,
-			delta: 0
+			compressedSize: 300,
+			compressedSizeBefore: 300,
+			compressedSizeDelta: 0,
+			size: 1000,
+			sizeBefore: 1000,
+			sizeDelta: 0
 		},
 		// added
 		{
 			filename: 'added.js',
-			size: 5000,
+			compressedSize: 5000,
+			compressedSizeBefore: 0,
+			compressedSizeDelta: 5000,
+			size: 8000,
 			sizeBefore: 0,
-			delta: 5000
+			sizeDelta: 8000
 		},
 		// removed
 		{
 			filename: 'removed.js',
+			compressedSize: 0,
+			compressedSizeBefore: 5000,
+			compressedSizeDelta: -5000,
 			size: 0,
-			sizeBefore: 5000,
-			delta: -5000
+			sizeBefore: 12000,
+			sizeDelta: -12000
 		},
 		// threshold
 		{
 			filename: 'threshold.js',
-			size: 4500,
-			sizeBefore: 4491,
-			delta: 9
+			compressedSize: 4500,
+			compressedSizeBefore: 4491,
+			compressedSizeDelta: 9,
+			size: 7500,
+			sizeBefore: 7491,
+			sizeDelta: 9
 		},
 	];
 	const defaultOptions = {

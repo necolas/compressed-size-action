@@ -1,23 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`diffTable 1`] = `
-"**Size Change:** +9 B (0%) 
+"**Size change:** +0.01 kB 
+**Total size:** 17.30 kB
 
-**Total Size:** 17.3 kB
+| Filename | Size (kB) | kB change | % change |  |
+| :--- | :--- | :--- | :--- | :---: |
+| \`increase.js\` | **5.00**&nbsp;(10.00) | **+2.50**&nbsp;(+3.00) | **+100.0%**&nbsp;(+42.9%) | 🔴 |
+| \`decrease.js\` | **2.50**&nbsp;(7.50) | **-2.50**&nbsp;(-4.50) | **-50.0%**&nbsp;(-37.5%) | 🟢 |
+| \`added.js\` | **5.00**&nbsp;(8.00) | **+5.00**&nbsp;(+8.00) | **+100.0%**&nbsp;(+100.0%) | 🔴 |
+| \`removed.js\` | **0.00**&nbsp;(0.00) | **-5.00**&nbsp;(-12.00) | **-100.0%**&nbsp;(-100.0%) | 🟢 |
+| \`threshold.js\` | **4.50**&nbsp;(7.50) | **+0.01**&nbsp;(+0.01) | **+0.2%**&nbsp;(+0.1%) |  |
 
-| Filename | Size | Change |  |
-| :--- | :---: | :---: | :---: |
-| \`increase.js\` | 5 kB | +2.5 kB (100.0%) | 🆘 |
-| \`decrease.js\` | 2.5 kB | -2.5 kB (-50.0%) | 🏆 |
-| \`added.js\` | 5 kB | +5 kB (100.0%) | 🆘 |
-| \`removed.js\` | 0 B | -5 kB (-100.0%) | 🏆 |
-| \`threshold.js\` | 4.5 kB | +9 B (0.2%) |  |
+<details><summary><strong>View unchanged</strong></summary>
 
-<details><summary>ℹ️ <strong>View Unchanged</strong></summary>
-
-| Filename | Size | Change |
-| :--- | :---: | :---: |
-| \`unchanged.js\` | 300 B | 0 B |
+| Filename | Size (kB) | kB change | % change |
+| :--- | :--- | :--- | :--- |
+| \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
 
 </details>
 
@@ -25,19 +24,19 @@ exports[`diffTable 1`] = `
 `;
 
 exports[`diffTable 2`] = `
-"| Filename | Size | Change |  |
-| :--- | :---: | :---: | :---: |
-| \`increase.js\` | 5 kB | +2.5 kB (100.0%) | 🆘 |
-| \`decrease.js\` | 2.5 kB | -2.5 kB (-50.0%) | 🏆 |
-| \`added.js\` | 5 kB | +5 kB (100.0%) | 🆘 |
-| \`removed.js\` | 0 B | -5 kB (-100.0%) | 🏆 |
-| \`threshold.js\` | 4.5 kB | +9 B (0.2%) |  |
+"| Filename | Size (kB) | kB change | % change |  |
+| :--- | :--- | :--- | :--- | :---: |
+| \`increase.js\` | **5.00**&nbsp;(10.00) | **+2.50**&nbsp;(+3.00) | **+100.0%**&nbsp;(+42.9%) | 🔴 |
+| \`decrease.js\` | **2.50**&nbsp;(7.50) | **-2.50**&nbsp;(-4.50) | **-50.0%**&nbsp;(-37.5%) | 🟢 |
+| \`added.js\` | **5.00**&nbsp;(8.00) | **+5.00**&nbsp;(+8.00) | **+100.0%**&nbsp;(+100.0%) | 🔴 |
+| \`removed.js\` | **0.00**&nbsp;(0.00) | **-5.00**&nbsp;(-12.00) | **-100.0%**&nbsp;(-100.0%) | 🟢 |
+| \`threshold.js\` | **4.50**&nbsp;(7.50) | **+0.01**&nbsp;(+0.01) | **+0.2%**&nbsp;(+0.1%) |  |
 
-<details><summary>ℹ️ <strong>View Unchanged</strong></summary>
+<details><summary><strong>View unchanged</strong></summary>
 
-| Filename | Size | Change |
-| :--- | :---: | :---: |
-| \`unchanged.js\` | 300 B | 0 B |
+| Filename | Size (kB) | kB change | % change |
+| :--- | :--- | :--- | :--- |
+| \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
 
 </details>
 
@@ -45,52 +44,49 @@ exports[`diffTable 2`] = `
 `;
 
 exports[`diffTable 3`] = `
-"**Size Change:** +9 B (0%) 
+"**Size change:** +0.01 kB 
+**Total size:** 17.30 kB
 
-**Total Size:** 17.3 kB
-
-| Filename | Size | Change |  |
-| :--- | :---: | :---: | :---: |
-| \`increase.js\` | 5 kB | +2.5 kB (100.0%) | 🆘 |
-| \`decrease.js\` | 2.5 kB | -2.5 kB (-50.0%) | 🏆 |
-| \`unchanged.js\` | 300 B | 0 B |  |
-| \`added.js\` | 5 kB | +5 kB (100.0%) | 🆘 |
-| \`removed.js\` | 0 B | -5 kB (-100.0%) | 🏆 |
-| \`threshold.js\` | 4.5 kB | +9 B (0.2%) |  |"
+| Filename | Size (kB) | kB change | % change |  |
+| :--- | :--- | :--- | :--- | :---: |
+| \`increase.js\` | **5.00**&nbsp;(10.00) | **+2.50**&nbsp;(+3.00) | **+100.0%**&nbsp;(+42.9%) | 🔴 |
+| \`decrease.js\` | **2.50**&nbsp;(7.50) | **-2.50**&nbsp;(-4.50) | **-50.0%**&nbsp;(-37.5%) | 🟢 |
+| \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |  |
+| \`added.js\` | **5.00**&nbsp;(8.00) | **+5.00**&nbsp;(+8.00) | **+100.0%**&nbsp;(+100.0%) | 🔴 |
+| \`removed.js\` | **0.00**&nbsp;(0.00) | **-5.00**&nbsp;(-12.00) | **-100.0%**&nbsp;(-100.0%) | 🟢 |
+| \`threshold.js\` | **4.50**&nbsp;(7.50) | **+0.01**&nbsp;(+0.01) | **+0.2%**&nbsp;(+0.1%) |  |"
 `;
 
 exports[`diffTable 4`] = `
-"**Size Change:** +9 B (0%) 
+"**Size change:** +0.01 kB 
+**Total size:** 17.30 kB
 
-**Total Size:** 17.3 kB
-
-| Filename | Size | Change |  |
-| :--- | :---: | :---: | :---: |
-| \`increase.js\` | 5 kB | +2.5 kB (100.0%) | 🆘 |
-| \`decrease.js\` | 2.5 kB | -2.5 kB (-50.0%) | 🏆 |
-| \`added.js\` | 5 kB | +5 kB (100.0%) | 🆘 |
-| \`removed.js\` | 0 B | -5 kB (-100.0%) | 🏆 |
-| \`threshold.js\` | 4.5 kB | +9 B (0.2%) |  |"
+| Filename | Size (kB) | kB change | % change |  |
+| :--- | :--- | :--- | :--- | :---: |
+| \`increase.js\` | **5.00**&nbsp;(10.00) | **+2.50**&nbsp;(+3.00) | **+100.0%**&nbsp;(+42.9%) | 🔴 |
+| \`decrease.js\` | **2.50**&nbsp;(7.50) | **-2.50**&nbsp;(-4.50) | **-50.0%**&nbsp;(-37.5%) | 🟢 |
+| \`added.js\` | **5.00**&nbsp;(8.00) | **+5.00**&nbsp;(+8.00) | **+100.0%**&nbsp;(+100.0%) | 🔴 |
+| \`removed.js\` | **0.00**&nbsp;(0.00) | **-5.00**&nbsp;(-12.00) | **-100.0%**&nbsp;(-100.0%) | 🟢 |
+| \`threshold.js\` | **4.50**&nbsp;(7.50) | **+0.01**&nbsp;(+0.01) | **+0.2%**&nbsp;(+0.1%) |  |"
 `;
 
 exports[`diffTable 5`] = `
-"**Size Change:** +9 B (0%) 
+"**Size change:** +0.01 kB 
+**Total size:** 17.30 kB
 
-**Total Size:** 17.3 kB
+| Filename | Size (kB) | kB change | % change |  |
+| :--- | :--- | :--- | :--- | :---: |
+| \`increase.js\` | **5.00**&nbsp;(10.00) | **+2.50**&nbsp;(+3.00) | **+100.0%**&nbsp;(+42.9%) | 🔴 |
+| \`decrease.js\` | **2.50**&nbsp;(7.50) | **-2.50**&nbsp;(-4.50) | **-50.0%**&nbsp;(-37.5%) | 🟢 |
+| \`added.js\` | **5.00**&nbsp;(8.00) | **+5.00**&nbsp;(+8.00) | **+100.0%**&nbsp;(+100.0%) | 🔴 |
+| \`removed.js\` | **0.00**&nbsp;(0.00) | **-5.00**&nbsp;(-12.00) | **-100.0%**&nbsp;(-100.0%) | 🟢 |
 
-| Filename | Size | Change |  |
-| :--- | :---: | :---: | :---: |
-| \`increase.js\` | 5 kB | +2.5 kB (100.0%) | 🆘 |
-| \`decrease.js\` | 2.5 kB | -2.5 kB (-50.0%) | 🏆 |
-| \`added.js\` | 5 kB | +5 kB (100.0%) | 🆘 |
-| \`removed.js\` | 0 B | -5 kB (-100.0%) | 🏆 |
+<details><summary><strong>View unchanged</strong></summary>
 
-<details><summary>ℹ️ <strong>View Unchanged</strong></summary>
-
-| Filename | Size | Change |
-| :--- | :---: | :---: |
-| \`unchanged.js\` | 300 B | 0 B |
-| \`threshold.js\` | 4.5 kB | +9 B (0.2%) |
+| Filename | Size (kB) | kB change | % change |
+| :--- | :--- | :--- | :--- |
+| \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
+| \`threshold.js\` | **4.50**&nbsp;(7.50) | **+0.01**&nbsp;(+0.01) | **+0.2%**&nbsp;(+0.1%) |
 
 </details>
 
@@ -98,22 +94,22 @@ exports[`diffTable 5`] = `
 `;
 
 exports[`diffTable 6`] = `
-"**Size Change:** 0 B 
+"**Size change:** +0.01 kB 
+**Total size:** 17.30 kB
 
-**Total Size:** 17.3 kB
+| Filename | Size (kB) | kB change | % change |  |
+| :--- | :--- | :--- | :--- | :---: |
+| \`increase.js\` | **5.00**&nbsp;(10.00) | **+2.50**&nbsp;(+3.00) | **+100.0%**&nbsp;(+42.9%) | 🔴 |
+| \`decrease.js\` | **2.50**&nbsp;(7.50) | **-2.50**&nbsp;(-4.50) | **-50.0%**&nbsp;(-37.5%) | 🟢 |
+| \`added.js\` | **5.00**&nbsp;(8.00) | **+5.00**&nbsp;(+8.00) | **+100.0%**&nbsp;(+100.0%) | 🔴 |
+| \`removed.js\` | **0.00**&nbsp;(0.00) | **-5.00**&nbsp;(-12.00) | **-100.0%**&nbsp;(-100.0%) | 🟢 |
+| \`threshold.js\` | **4.50**&nbsp;(7.50) | **+0.01**&nbsp;(+0.01) | **+0.2%**&nbsp;(+0.1%) |  |
 
+<details><summary><strong>View unchanged</strong></summary>
 
-
-<details><summary>ℹ️ <strong>View Unchanged</strong></summary>
-
-| Filename | Size | Change |
-| :--- | :---: | :---: |
-| \`increase.js\` | 5 kB | 0 B |
-| \`decrease.js\` | 2.5 kB | 0 B |
-| \`unchanged.js\` | 300 B | 0 B |
-| \`added.js\` | 5 kB | 0 B |
-| \`removed.js\` | 0 B | 0 B |
-| \`threshold.js\` | 4.5 kB | 0 B |
+| Filename | Size (kB) | kB change | % change |
+| :--- | :--- | :--- | :--- |
+| \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
 
 </details>
 
@@ -121,19 +117,24 @@ exports[`diffTable 6`] = `
 `;
 
 exports[`diffTable 7`] = `
-"**Size Change:** 0 B 
-
-**Total Size:** 300 B
-
+"**Size change:** 0.00 kB 
+**Total size:** 0.30 kB
 
 
-<details><summary>ℹ️ <strong>View Unchanged</strong></summary>
 
-| Filename | Size | Change |
-| :--- | :---: | :---: |
-| \`unchanged.js\` | 300 B | 0 B |
+<details><summary><strong>View unchanged</strong></summary>
+
+| Filename | Size (kB) | kB change | % change |
+| :--- | :--- | :--- | :--- |
+| \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
 
 </details>
 
 "
 `;
+
+exports[`getDeltaText 1`] = `"+5.00"`;
+
+exports[`getDeltaText 2`] = `"-5.00"`;
+
+exports[`getDeltaText 3`] = `"0.00"`;

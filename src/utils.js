@@ -1,5 +1,9 @@
 import fs from 'fs';
-import prettyBytes from 'pretty-bytes';
+
+function prettyBytes(bytes, toFixed) {
+  var kb = bytes / 1000;
+  return kb.toFixed(toFixed || 2);
+}
 
 /**
  * Check if a given file exists and can be accessed.
@@ -43,12 +47,19 @@ export function stripHash(regex) {
  * @param {number} delta
  * @param {number} difference
  */
-export function getDeltaText(delta, difference) {
-	let deltaText = (delta > 0 ? '+' : '') + prettyBytes(delta);
-	if (delta && Math.abs(delta) > 1) {
-		deltaText += ` (${difference}%)`;
-	}
+export function getDeltaText(delta) {
+	const deltaText = (delta > 0 ? '+' : '') + prettyBytes(delta);
 	return deltaText;
+}
+
+function getDifference(before, delta) {
+	const divisor = before === 0 ? Math.abs(delta) : before
+	return ((delta / divisor) * 100).toFixed(1);
+}
+
+function getDifferenceText(difference) {
+	const text = (difference > 0 ? '+' : '') + difference + '%';
+	return text;
 }
 
 /**
@@ -56,14 +67,9 @@ export function getDeltaText(delta, difference) {
  */
 export function iconForDifference(difference) {
 	let icon = '';
-	if (difference >= 50) icon = '🆘';
-	else if (difference >= 20) icon = '🚨';
-	else if (difference >= 10) icon = '⚠️';
-	else if (difference >= 5) icon = '🔍';
-	else if (difference <= -50) icon = '🏆';
-	else if (difference <= -20) icon = '🎉';
-	else if (difference <= -10) icon = '👏';
-	else if (difference <= -5) icon = '✅';
+	if (difference >= 20) icon = '🔴';
+	else if (difference >= 10) icon = '🟡';
+	else if (difference <= -5) icon = '🟢';
 	return icon;
 }
 
@@ -91,9 +97,9 @@ function markdownTable(rows) {
 
 	return [
 		// Header
-		['Filename', 'Size', 'Change', ''].slice(0, columnLength),
+		['Filename', 'Size (kB)', 'kB change', '% change', ''].slice(0, columnLength),
 		// Align
-		[':---', ':---:', ':---:', ':---:'].slice(0, columnLength),
+		[':---', ':---', ':---', ':---', ':---:'].slice(0, columnLength),
 		// Body
 		...rows
 	].map(columns => `| ${columns.join(' | ')} |`).join('\n');
@@ -122,20 +128,36 @@ export function diffTable(files, { showTotal, collapseUnchanged, omitUnchanged, 
 	let totalSize = 0;
 	let totalDelta = 0;
 	for (const file of files) {
-		const { filename, size, sizeBefore, delta } = file;
-		totalSize += size;
-		totalDelta += delta;
-		const divisor = sizeBefore === 0 ? Math.abs(delta) : sizeBefore
-		const difference = ((delta / divisor) * 100).toFixed(1);
-		const isUnchanged = Math.abs(delta) < minimumChangeThreshold;
+		const {
+			filename,
+			compressedSize,
+			compressedSizeBefore,
+			compressedSizeDelta,
+			size,
+			sizeBefore,
+			sizeDelta
+		} = file;
+		totalSize += compressedSize;
+		totalDelta += compressedSizeDelta;
+		const compressedDifference = getDifference(compressedSizeBefore, compressedSizeDelta);
+		const sizeDifference = getDifference(sizeBefore, sizeDelta);
+		const isUnchanged = Math.abs(compressedSizeDelta) < minimumChangeThreshold;
 
 		if (isUnchanged && omitUnchanged) continue;
 
 		const columns = [
-			`\`${filename}\``, 
-			prettyBytes(size), 
-			getDeltaText(delta, difference),
-			iconForDifference(difference)
+			// file name
+			`\`${filename}\``,
+			// size before
+			// `**${prettyBytes(compressedSizeBefore)}**&nbsp;(${prettyBytes(sizeBefore)})`,
+			// size
+			`**${prettyBytes(compressedSize)}**&nbsp;(${prettyBytes(size)})`,
+			// absolute change
+			`**${getDeltaText(compressedSizeDelta)}**&nbsp;(${getDeltaText(sizeDelta)})`,
+			// percentage change
+			`**${getDifferenceText(compressedDifference)}**&nbsp;(${getDifferenceText(sizeDifference)})`,
+			// icon
+			iconForDifference(compressedSizeDelta)
 		];
 		if (isUnchanged && collapseUnchanged) {
 			unChangedRows.push(columns);
@@ -148,15 +170,15 @@ export function diffTable(files, { showTotal, collapseUnchanged, omitUnchanged, 
 
 	if (unChangedRows.length !== 0) {
 		const outUnchanged = markdownTable(unChangedRows);
-		out += `\n\n<details><summary>ℹ️ <strong>View Unchanged</strong></summary>\n\n${outUnchanged}\n\n</details>\n\n`;
+		out += `\n\n<details><summary><strong>View unchanged</strong></summary>\n\n${outUnchanged}\n\n</details>\n\n`;
 	}
 
 	if (showTotal) {
 		const totalDifference = ((totalDelta / totalSize) * 100) | 0;
 		let totalDeltaText = getDeltaText(totalDelta, totalDifference);
 		let totalIcon = iconForDifference(totalDifference);
-		out = `**Total Size:** ${prettyBytes(totalSize)}\n\n${out}`;
-		out = `**Size Change:** ${totalDeltaText} ${totalIcon}\n\n${out}`;
+		out = `**Total size:** ${prettyBytes(totalSize)} kB\n\n${out}`;
+		out = `**Size change:** ${totalDeltaText} kB ${totalIcon}\n${out}`;
 	}
 
 	return out;

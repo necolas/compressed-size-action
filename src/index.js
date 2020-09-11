@@ -130,7 +130,7 @@ async function run(octokit, context, token) {
 
 	const comment = {
 		...commentInfo,
-		body: markdownDiff + '\n\n<a href="https://github.com/preactjs/compressed-size-action"><sub>compressed-size-action</sub></a>'
+		body: markdownDiff + '\n\n<a href="https://github.com/necolas/compressed-size-action"><small>compressed-size-action</small></a>'
 	};
 
 	if (toBool(getInput('use-check'))) {
