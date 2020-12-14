@@ -52,6 +52,16 @@ test('diffTable', () => {
 			sizeBefore: 1000,
 			sizeDelta: 0
 		},
+		// unchanged
+		{
+			filename: 'unchanged-tiny.js',
+			compressedSize: 0,
+			compressedSizeBefore: 0,
+			compressedSizeDelta: 0,
+			size: 10,
+			sizeBefore: 10,
+			sizeDelta: 0
+		},
 		// added
 		{
 			filename: 'added.js',

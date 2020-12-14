@@ -17,6 +17,7 @@ exports[`diffTable 1`] = `
 | Filename | Size (kB) | kB change | % change |
 | :--- | :--- | :--- | :--- |
 | \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
+| \`unchanged-tiny.js\` | **0.00**&nbsp;(0.01) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
 
 </details>
 
@@ -37,6 +38,7 @@ exports[`diffTable 2`] = `
 | Filename | Size (kB) | kB change | % change |
 | :--- | :--- | :--- | :--- |
 | \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
+| \`unchanged-tiny.js\` | **0.00**&nbsp;(0.01) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
 
 </details>
 
@@ -52,6 +54,7 @@ exports[`diffTable 3`] = `
 | \`increase.js\` | **5.00**&nbsp;(10.00) | **+2.50**&nbsp;(+3.00) | **+100.0%**&nbsp;(+42.9%) | 🔴 |
 | \`decrease.js\` | **2.50**&nbsp;(7.50) | **-2.50**&nbsp;(-4.50) | **-50.0%**&nbsp;(-37.5%) | 🟢 |
 | \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |  |
+| \`unchanged-tiny.js\` | **0.00**&nbsp;(0.01) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |  |
 | \`added.js\` | **5.00**&nbsp;(8.00) | **+5.00**&nbsp;(+8.00) | **+100.0%**&nbsp;(+100.0%) | 🔴 |
 | \`removed.js\` | **0.00**&nbsp;(0.00) | **-5.00**&nbsp;(-12.00) | **-100.0%**&nbsp;(-100.0%) | 🟢 |
 | \`threshold.js\` | **4.50**&nbsp;(7.50) | **+0.01**&nbsp;(+0.01) | **+0.2%**&nbsp;(+0.1%) |  |"
@@ -86,6 +89,7 @@ exports[`diffTable 5`] = `
 | Filename | Size (kB) | kB change | % change |
 | :--- | :--- | :--- | :--- |
 | \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
+| \`unchanged-tiny.js\` | **0.00**&nbsp;(0.01) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
 | \`threshold.js\` | **4.50**&nbsp;(7.50) | **+0.01**&nbsp;(+0.01) | **+0.2%**&nbsp;(+0.1%) |
 
 </details>
@@ -110,6 +114,7 @@ exports[`diffTable 6`] = `
 | Filename | Size (kB) | kB change | % change |
 | :--- | :--- | :--- | :--- |
 | \`unchanged.js\` | **0.30**&nbsp;(1.00) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
+| \`unchanged-tiny.js\` | **0.00**&nbsp;(0.01) | **0.00**&nbsp;(0.00) | **0.0%**&nbsp;(0.0%) |
 
 </details>
 

@@ -54,7 +54,8 @@ export function getDeltaText(delta) {
 
 function getDifference(before, delta) {
 	const divisor = before === 0 ? Math.abs(delta) : before
-	return ((delta / divisor) * 100).toFixed(1);
+	const diff = divisor === 0 ? 0 : (delta / divisor) * 100;
+	return diff.toFixed(1);
 }
 
 function getDifferenceText(difference) {
