@@ -10,12 +10,12 @@ async function run(octokit, context, token) {
 	const { owner, repo, number: pull_number } = context.issue;
 
 	// const pr = (await octokit.pulls.get({ owner, repo, pull_number })).data;
-	const pr = context.payload.pull_request;
+	const pr = context.payload.pull_request || context.payload.pull_request_target;
 	try {
 		debug('pr' + JSON.stringify(pr, null, 2));
 	} catch (e) { }
 	if (!pr) {
-		throw Error('Could not retrieve PR information. Only "pull_request" triggered workflows are currently supported.');
+		throw Error('Could not retrieve PR information. Only "pull_request" or "pull_request_target" triggered workflows are currently supported.');
 	}
 
 	const plugin = new SizePlugin({
@@ -58,7 +58,7 @@ async function run(octokit, context, token) {
 	try {
 		baseRef = context.payload.base.ref;
 		if (!baseRef) throw Error('missing context.payload.pull_request.base.ref');
-		await exec(`git fetch -n origin ${context.payload.pull_request.base.ref}`);
+		await exec(`git fetch -n origin ${pr.base.ref}`);
 		console.log('Successfully fetched base.ref');
 	} catch (e) {
 		console.log('Fetching base.ref failed', e.message);
@@ -149,7 +149,7 @@ async function run(octokit, context, token) {
 			const comments = (await octokit.issues.listComments(commentInfo)).data;
 			for (let i = comments.length; i--;) {
 				const c = comments[i];
-				if (c.user.type === 'Bot' && /<sub>[\s\n]*(compressed|gzip)-size-action/.test(c.body)) {
+				if (c.user.type === 'Bot' && /[\s\n]*(compressed|gzip)-size-action/.test(c.body)) {
 					commentId = c.id;
 					break;
 				}
@@ -178,6 +178,7 @@ async function run(octokit, context, token) {
 		if (!commentId) {
 			console.log('Creating new comment');
 			try {
+				console.log(JSON.stringify(comment, null, 2))
 				await octokit.issues.createComment(comment);
 			} catch (e) {
 				console.log(`Error creating comment: ${e.message}`);
@@ -218,7 +219,7 @@ async function createCheck(octokit, context) {
 	const check = await octokit.checks.create({
 		...context.repo,
 		name: 'Compressed Size',
-		head_sha: context.payload.pull_request.head.sha,
+		head_sha: pr.head.sha,
 		status: 'in_progress',
 	});
 
